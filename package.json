@@ -1,0 +1,23 @@
+{
+  "name": "infoproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NimitAgrawal2003/Infoproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NimitAgrawal2003/Infoproject/issues"
+  },
+  "homepage": "https://github.com/NimitAgrawal2003/Infoproject#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  }
+}
