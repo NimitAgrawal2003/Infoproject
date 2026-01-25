@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Me API Playground</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, button { padding: 6px; margin: 5px; }
+    .card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+
+<h2>My Profile</h2>
+<button onclick="loadProfile()">Load Profile</button>
+<div id="profile"></div>
+
+<hr/>
+
+<h2>Search Projects by Skill</h2>
+<input id="skillInput" placeholder="Enter skill"/>
+<button onclick="searchProjects()">Search</button>
+<div id="projects"></div>
+
+<hr/>
+
+<h2>Top Skills</h2>
+<button onclick="loadTopSkills()">Load Skills</button>
+<div id="skills"></div>
+
+<script>
+const API = "http://localhost:8000/api"; // later replace with deployed URL
+
+async function loadProfile() {
+  const res = await fetch(`${API}/profile`, { credentials: "include" });
+  const data = await res.json();
+  document.getElementById("profile").innerHTML =
+    `<div class="card">
+      <b>Name:</b> ${data.data.name}<br/>
+      <b>Email:</b> ${data.data.email}<br/>
+      <b>Education:</b> ${data.data.education}<br/>
+      <b>Skills:</b> ${data.data.skills.join(", ")}
+    </div>`;
+}
+
+async function searchProjects() {
+  const skill = document.getElementById("skillInput").value;
+  const res = await fetch(`${API}/projects?skill=${skill}`);
+  const data = await res.json();
+
+  let html = "";
+  data.data.forEach(p => {
+    html += `<div class="card"><b>${p.title}</b><br/>${p.description}</div>`;
+  });
+
+  document.getElementById("projects").innerHTML = html;
+}
+
+async function loadTopSkills() {
+  const res = await fetch(`${API}/skills/top`);
+  const data = await res.json();
+
+  let html = "";
+  data.data.forEach(s => {
+    html += `<div>${s[0]} (${s[1]})</div>`;
+  });
+
+  document.getElementById("skills").innerHTML = html;
+}
+</script>
+
+</body>
+</html>

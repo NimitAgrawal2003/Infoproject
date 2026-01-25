@@ -109,9 +109,7 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
   );
 });
 
-/* ===============================
-   LOGOUT
-================================= */
+
 
 export const logoutUser = asyncHandler(async (req, res) => {
 

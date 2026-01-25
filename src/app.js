@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 
 import userRouter from "./routes/user.routes.js";
 import profileRouter from "./routes/profile.routes.js";
-
+import queryRouter from "./routes/query.routes.js"
 const app = express();
 
 console.log("🔥 REAL APP.JS LOADED 🔥");
@@ -32,4 +32,5 @@ app.get("/health", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/profile", profileRouter);
 
+app.use("/api",queryRouter)
 export default app;
