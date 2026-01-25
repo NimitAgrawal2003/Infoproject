@@ -9,6 +9,7 @@ import {
 } from "../controllers/user.controller.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
+
 const router = express.Router();
 
 
@@ -21,6 +22,7 @@ router.post("/logout", verifyJWT, logoutUser);
 
 router.put("/:id", verifyJWT, updateUserById);
 router.delete("/:id", verifyJWT, deleteUserById);
+
 
 
 export default router

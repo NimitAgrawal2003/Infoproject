@@ -1,7 +1,14 @@
 import { User } from "../models/user.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
-import ApiResponse from "../utils/ApiResponse.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { Project } from "../models/project.model.js";
+const options = {
+  httpOnly: true,
+  secure: false,   // true only when using HTTPS in production
+  sameSite: "lax"
+};
+
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -77,9 +84,7 @@ export const loginUser = asyncHandler(async (req, res) => {
   );
 });
 
-/* ===============================
-   REFRESH TOKEN
-================================= */
+
 
 export const refreshAccessToken = asyncHandler(async (req, res) => {
 

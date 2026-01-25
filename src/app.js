@@ -1,19 +1,35 @@
-import express from "express"
-import cors from "cors"
-import cookieParser from "cookie-parser"
-import userRouter from "./routes/user.routes.js"
-const app = express()
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
+import userRouter from "./routes/user.routes.js";
+import profileRouter from "./routes/profile.routes.js";
+
+const app = express();
+
+console.log("🔥 REAL APP.JS LOADED 🔥");
 
 app.use(cors({
-    origin:process.env.origin,
-    credentials:true
-}))
+  origin: true,          // allow Postman + browser
+  credentials: true
+}));
 
-app.use(express.json({limit:"16kb"}))
-app.use(express.urlencoded({extended:true , limit: "16kb"}))
-app.use(express.static("public"))              
-app.use(cookieParser())
-app.use("/api/users",userRouter)
+app.use(express.json({ limit: "16kb" }));
 
+app.use(cookieParser());
 
-export default app
+/* test route */
+app.get("/test", (req, res) => {
+  res.send("SERVER WORKING");
+});
+
+/* health route */
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+/* routes */
+app.use("/api/users", userRouter);
+app.use("/api/profile", profileRouter);
+
+export default app;
