@@ -3,11 +3,14 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Project } from "../models/project.model.js";
+
 const options = {
   httpOnly: true,
-  secure: false,   // true only when using HTTPS in production
-  sameSite: "lax"
+  secure: false,
+  sameSite: "lax",
+  path: "/"          // 👈 VERY IMPORTANT
 };
+
 
 
 const generateAccessAndRefreshTokens = async (userId) => {

@@ -28,41 +28,61 @@
 <div id="skills"></div>
 
 <script>
-const API = "http://localhost:8000/api"; // later replace with deployed URL
+const API = "/api"; 
+
 
 async function loadProfile() {
-  const res = await fetch(`${API}/profile`, { credentials: "include" });
-  const data = await res.json();
-  document.getElementById("profile").innerHTML =
-    `<div class="card">
-      <b>Name:</b> ${data.data.name}<br/>
-      <b>Email:</b> ${data.data.email}<br/>
-      <b>Education:</b> ${data.data.education}<br/>
-      <b>Skills:</b> ${data.data.skills.join(", ")}
-    </div>`;
+  const res = await fetch(`${API}/profile`, {
+    credentials: "include"
+  });
+
+  const result = await res.json();
+
+  if (!result.success) {
+    alert("Unauthorized. Please login again.");
+    return;
+  }
+
+  const user = result.data;
+
+  document.getElementById("profile").innerHTML = `
+    <div class="card">
+      <b>Name:</b> ${user.name}<br/>
+      <b>Email:</b> ${user.email}<br/>
+      <b>Education:</b> ${user.education || "-"}<br/>
+      <b>Skills:</b> ${(user.skills || []).join(", ")}
+    </div>
+  `;
 }
+
 
 async function searchProjects() {
   const skill = document.getElementById("skillInput").value;
+
   const res = await fetch(`${API}/projects?skill=${skill}`);
-  const data = await res.json();
+  const result = await res.json();
 
   let html = "";
-  data.data.forEach(p => {
+
+  (result.data || []).forEach(p => {
     html += `<div class="card"><b>${p.title}</b><br/>${p.description}</div>`;
   });
 
   document.getElementById("projects").innerHTML = html;
 }
 
+
 async function loadTopSkills() {
   const res = await fetch(`${API}/skills/top`);
-  const data = await res.json();
+  const result = await res.json();
+
+  const skillsObj = result.data;
 
   let html = "";
-  data.data.forEach(s => {
-    html += `<div>${s[0]} (${s[1]})</div>`;
-  });
+
+  for (const skill in skillsObj) {
+    html += `<div>${skill} (${skillsObj[skill]})</div>`;
+  }
 
   document.getElementById("skills").innerHTML = html;
 }
