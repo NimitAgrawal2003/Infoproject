@@ -6,10 +6,11 @@ import { Project } from "../models/project.model.js";
 
 const options = {
   httpOnly: true,
-  secure: false,
-  sameSite: "lax",
-  path: "/"          // 👈 VERY IMPORTANT
+  secure: true,        // required for HTTPS
+  sameSite: "none",    // required for cross-site cookies
+  path: "/"
 };
+
 
 
 

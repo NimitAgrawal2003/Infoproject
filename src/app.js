@@ -19,9 +19,13 @@ const __dirname = path.dirname(__filename);
 
 
 app.use(cors({
-  origin: true,          // allow Postman + browser
+  origin: [
+    "http://localhost:8000",
+    "https://willowy-moxie-78bca9.netlify.app"
+  ],
   credentials: true
 }));
+
 
 app.use(express.json({ limit: "16kb" }));
 app.use(cookieParser());
