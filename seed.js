@@ -9,16 +9,16 @@ dotenv.config();
 
 const seedData = async () => {
   try {
-    // Connect to DB
-    const DB_NAME = "infoproject"; // same as your constants.js
+    
+    const DB_NAME = "infoproject"; 
     await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`);
     console.log("DB connected");
 
-    // Clear old data
+    
     await User.deleteMany();
     await Project.deleteMany();
 
-    // Create projects
+    
     const project1 = await Project.create({
       title: "Profile API System",
       description: "Backend API for managing user profiles using Node.js and MongoDB",
@@ -31,10 +31,10 @@ const seedData = async () => {
       links: ["https://github.com/NimitAgrawal2003"]
     });
 
-    // Hash password
+   
     const hashedPassword = await bcrypt.hash("123456", 10);
 
-    // Create user (profile)
+    
     await User.create({
       name: "Nimit Agrawal",
       email: "nimit@test.com",
